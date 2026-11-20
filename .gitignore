@@ -1,0 +1,6 @@
+# PUBLIC repository: secrets and private server details never go here
+.env
+**/.env
+PRIVATE.md
+
+node_modules/

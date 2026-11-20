@@ -1,0 +1,36 @@
+# systemd unit for the funnel bot on a VPS (installed by deploy/install.sh).
+# Starts on boot, restarts 10 s after a crash or network loss. Exit code 78 = configuration problem
+# (wrong .env, revoked token, another copy running): no restart loop — fix .env, then `systemctl restart funnel-bot`.
+# Logs: journalctl -u funnel-bot -f
+[Unit]
+Description=Funnel Telegram bot
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=funnel
+Group=funnel
+WorkingDirectory=/opt/funnel-bot/bot
+ExecStart=/usr/bin/node --env-file=.env src/main.js
+Restart=always
+RestartSec=10
+RestartPreventExitStatus=78
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+# Hardening: the bot keeps all data in Postgres and writes no files.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryMax=256M
+
+[Install]
+WantedBy=multi-user.target

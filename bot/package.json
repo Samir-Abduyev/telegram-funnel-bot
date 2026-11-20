@@ -1,0 +1,21 @@
+{
+  "name": "funnel-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Telegram funnel bot: free video lessons → payment → receipt check → closed group",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node --env-file=.env src/main.js",
+    "migrate": "node --env-file=.env scripts/migrate.mjs",
+    "forever": "node scripts/forever.mjs",
+    "test": "node --test \"test/unit/*.test.js\"",
+    "test:db": "node --test --test-concurrency=1 \"test/db/*.test.js\""
+  },
+  "dependencies": {
+    "grammy": "1.46.0",
+    "pg": "8.23.1"
+  }
+}
