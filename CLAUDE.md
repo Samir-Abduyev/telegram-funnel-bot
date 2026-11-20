@@ -14,7 +14,7 @@ Node 24 ESM, grammY long polling, pg → Supabase Postgres, schema `funnel`. Own
 
 ## Production (since 18.11): Linux VPS, systemd `funnel-bot` (user funnel, /opt/funnel-bot)
 - Server IP, SSH command, Supabase project ref and the deploy one-liner live in **PRIVATE.md** (local only, gitignored — this repo is PUBLIC).
-- Deploy = tar over SSH + `deploy/update.sh` (no rsync on Windows); keep `--exclude=PRIVATE.md --exclude=bot/.env`.
+- Deploy = tar over SSH + `deploy/update.sh` (no rsync on Windows); keep `--exclude=PRIVATE.md --exclude=.git --exclude=bot/.env` (funnel-bot is its own git repo: public GitHub Samir-Abduyev/telegram-funnel-bot).
 - NEVER start the bot on the PC any more (409 with the server). Logs: `journalctl -u funnel-bot -n 50 --no-pager` on the server.
 - PUBLIC repo: never commit IPs, ids, project refs or secrets — put them into PRIVATE.md.
 
